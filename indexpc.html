@@ -1,0 +1,105 @@
+<!doctype html>
+<html> 
+	<head> 
+		<title>Yiaoyaoの空间</title> 
+		<meta charset="UTF-8"> 
+		<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+		<style>
+		.content{
+			height: auto;
+			width: 100%;
+			background-color: rgb(240, 240, 199);
+			
+		}
+		 body {
+		padding-top: 40px;
+		background-image: url(pictures/06.jpg);
+		background-size: 100%;
+		background-origin: padding-box;
+		padding: 250px;
+			  }
+		.title {
+			background-color: white;
+			border-style: none;
+			border-radius: 15px;
+			   }
+		.me{
+			height: 350px;
+			width: 200px;
+			background-color: white;
+			padding-top: 5px;
+			float: right;
+		}
+		p{
+			text-align: center;
+		}
+		#main {
+		position: absolute;right: 10px;top: 10px;
+		text-align: center;
+		width: auto;
+		height: auto;
+		line-height: auto;
+		background-color: #0CC;
+		border-style: solid;
+		border-radius: 17px;
+			  }
+		ul {
+    	list-style-type: none;
+    	margin: 0;
+    	padding: 0;
+    	overflow: hidden;
+    	background-color: rgb(13, 180, 102);
+			  }
+ 		li {
+    	float: left;
+		   }
+ 
+		li a {
+ 	    display: block;
+    	color: white;
+    	text-align: center;
+    	padding: 14px 16px;
+    	text-decoration: none;	
+			 }
+ 
+		/*鼠标移动到选项上修改背景颜色 */
+		li a:hover {
+    	background-color: #111;
+					}
+		 </style> 
+	</head> 
+	<body> 
+		<h1 style="text-align: center;">Yiaoyaoの空间</h1>
+		<div class="title">
+		<div style="border-style: none;border-radius: 5px;">
+		<ul>
+			<li><a href="indexpc.html">主页</a></li>
+			<li><a href="pages/wenzhang.html">文章</a></li>
+			<li><a href="pages/music.html">音乐</a></li>
+			<li><a href="index.html">手机端</a></li>
+			<li style="float:right"><a href="#about">关于</a></li>
+		</ul>
+		</div>
+		</div>
+		<div class="me">
+		<p style="text-align: center;"><img src="pictures/01.jpg" height="180px" width="180px"></p>
+		<hr>
+		<p>Yiaoyao</p>
+		<p>男 14岁</p>
+		<p>喜爱科学与数码</p>
+		</div>
+		<div class="content">
+		<h2>Hello~大家好呀~这里是yiaoyao！</h2>
+		</div>
+		<div id="main"> 
+			<div id="show_time"> 
+				<script>
+					
+					//setInterval("show_time.innerHTML= new Date().toLocaleString()",1000);
+					
+					setInterval("show_time.innerHTML=new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay());",1000);
+				</script> 
+			</div> 
+		</div>  
+	</body>
+</html>
