@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="arttemplate/template-native.js"></script>
+
+    <script id="tem" type="text/html">
+        <!-- 将拿到的数据中 的comments变量 进行遍历 -->
+    <% for(var i=0;i < comments.length;i ++){
+    %>
+        <!-- 在每个li中 添加一个自定义的标签属性，用来记录自己的id -->
+        <li uid="<%= comments[i].id %>">
+            <p class="floor">
+                <%= comments[i].id %><a href="javascript:;" class="delete">删除</a>
+            </p>
+            <p class="author">层主：<span class="name">
+                    <%= comments[i].username %>
+                </span></p>
+            <p class="content">
+                <%= comments[i].content %>
+            </p>
+        </li>
+        <% } %>
+
+    </script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="post">
+            <h2>新年快乐</h2>
+            <p class="author">楼主：<span>alian</span></p>
+            <p class="txt">新年快乐，万事如意</p>
+        </div>
+        <hr>
+        <div class="reply">
+            <h4>发表回复</h4>
+            <p>用户名：<input type="text" class="usename"></p>
+            <textarea class="contents"></textarea><br>
+            <input type="button" value="发表" class="btn">
+        </div>
+
+        <div class="cmst">
+            <ul class="list">
+                <!-- <li>
+                    <p class="floor">1楼<a href="javascript:;" class="delete">删除</a></p>
+                    <p class="author">层主：<span class="name">哈哈哈</span></p>
+                    <p class="content">happy new year!</p>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        //获取元素
+        var $list = $(".cmst .list");
+        var $comment = $(".reply .contents");
+        var $user = $(".reply .usename");
+        var $btn = $(".reply .btn")
+        //获取后台数据
+        getData();
+        //封装函数
+        function getData(){
+   
+            $.ajax({
+   
+                url: "http://localhost:3000/db",
+                type: "GET",
+                success: function (data) {
+   
+                    // console.log(data);
+                    //将得到的数据添加到模板
+                    $list.html(template("tem", data));
+
+                    //在这里可以正常获取所有添加的元素
+                    //需要获取删除按钮，并添加点击事件，删除自己所在的li标签
+                    deleteData();
+                }
+            })
+        }
+        
+
+        //增加一项新的数据到数据库中
+        //添加点击事件
+        $btn.click(function () {
+   
+            var username = $user.val();
+            var content = $comment.val();
+            $.ajax({
+   
+                url: "http://localhost:3000/comments",
+                type: "POST",
+                dataType: "json",
+                data: {
+    username: username, content: content },
+                success: function (data) {
+   
+                    // $list.append(template("tem", { "comments": [data]}));
+                    getData();
+                }
+            }) 
+            // 清空输入
+            $user.val("");
+            $comment.val("");
+        })
+  
+        //封装删除函数
+        function deleteData(){
+   
+            // 定义 点击按钮删除
+            $(".cmst .list .delete").click(function(){
+   
+                // 要找到自己的祖先中的li标签
+                $li = $(this).parents("li");
+                // 找到li标签记录在数据库中的id
+                var index = $li.attr("uid");
+                // 发送请求
+                $.ajax({
+   
+                    url: " http://localhost:3000/comments/"+index,
+                    type: "DELETE",
+                })
+                // 从DOM结构中删除对应的li
+                $li.remove();
+            })
+        }
+
+    </script>
+</body>
+
+</html>
